@@ -1,0 +1,30 @@
+{ config, pkgs, ... }: {
+  config.modules.pkgsets.pkgsets.base-small.pkgs = with pkgs; [
+    tmux
+    git
+    mc
+    inetutils
+    knot-dns
+    dig
+    socat
+    fastfetch
+    gavin-bc
+    bottom
+    usbutils
+    pciutils
+    uhubctl
+    gnupg
+    pinentry-curses
+    pass
+    sshs
+    openssl
+    lftp
+    aria2
+    wget
+    btop
+    bwm_ng
+    jq
+    attic-client
+    yazi
+  ];
+}

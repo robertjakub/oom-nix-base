@@ -1,0 +1,101 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 2
+final_space = true
+auto_upgrade = false
+disable_notice = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    background = 'transparent'
+    foreground = 'blue'
+    template = '{{ .Path }}'
+
+    [blocks.segments.properties]
+      style = 'powerlevel'
+      max_width = 30
+      hide_root_location = true
+
+      [blocks.segments.properties.mapped_locations]
+        "/" = " "
+        "~" = " "
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    foreground_templates = [
+      "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB3B{{ end }}",
+      "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
+      "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+      "{{ if gt .Behind 0 }}#B388FB{{ end }}"
+    ]
+    background = 'transparent'
+    template = '  {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
+
+    [blocks.segments.properties]
+      branch_icon = ''
+      commit_icon = '@'
+      fetch_status = true
+
+[[blocks]]
+  type = 'rprompt'
+  overflow = 'hidden'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = 'yellow'
+    background = 'transparent'
+    template = '<#fefefe></> {{ .FormattedMs }}'
+
+    [blocks.segments.properties]
+      threshold = 5000
+
+  [[blocks.segments]]
+    type = "session"
+    style = "plain"
+    foreground = "yellow"
+    background = "transparent"
+    template = "{{ if .SSHSession }} <#fefefe></> {{ .UserName }}@{{ .HostName }}{{ end }}"
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = "os"
+    style = "plain"
+    foreground = "#26C6DA"
+    background = 'transparent'
+    template = "{{.Icon}} "
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    foreground_templates = [
+      "{{if gt .Code 0}}red{{end}}",
+      "{{if eq .Code 0}}magenta{{end}}",
+    ]
+    background = 'transparent'
+    template = '❯'
+
+[transient_prompt]
+  foreground_templates = [
+    "{{if gt .Code 0}}red{{end}}",
+    "{{if eq .Code 0}}magenta{{end}}",
+  ]
+  background = 'transparent'
+  template = '❯ '
+
+[secondary_prompt]
+  foreground = 'magenta'
+  background = 'transparent'
+  template = '❯❯ '
