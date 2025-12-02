@@ -28,7 +28,7 @@ in {
       };
     };
 
-    services.picom.enable = true;
+    # services.picom.enable = true;
     security.pam.services.swaylock = { };
     security.pam.services.swaylock.fprintAuth = false;
 
