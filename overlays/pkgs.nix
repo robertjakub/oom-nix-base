@@ -3,7 +3,7 @@ self: super: {
   flame = super.callPackage ../pkgs/flame { };
   passcore = super.callPackage ../pkgs/passcore { };
   graylog-7_0 = super.callPackage ../pkgs/graylog/7.0.nix { };
-  graylog-enterprise-7_0 = super.callPackage ../graylog-enterprise/7.0.nix { };
+  graylog-enterprise-7_0 = super.callPackage ../pkgs/graylog-enterprise/7.0.nix { };
   graylog-forwarder-7_0 = super.callPackage ../pkgs/graylog-forwarder/7.0.nix { };
   checkmate = super.callPackage ../pkgs/checkmate { };
   checkmate-capture = super.callPackage ../pkgs/checkmate-capture { };
