@@ -22,7 +22,7 @@ in
         features = { copilot = false; };
         telemetry = { metrics = false; };
         vim_mode = false;
-        relative_line_numbers = true;
+        relative_line_numbers = "enabled";
         ui_font_size = cfg.zed.UIfontSize;
         buffer_font_size = cfg.zed.fontSize;
         theme = "Ayu Dark";
