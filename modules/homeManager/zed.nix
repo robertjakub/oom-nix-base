@@ -1,12 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config, pkgs, lib, ... }:
+let
   inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.hm;
-in {
+in
+{
   options.hm.zed = {
     enable = mkEnableOption "home-manager/zed";
     fontSize = mkOption {
@@ -22,9 +19,10 @@ in {
     programs.zed-editor = {
       enable = true;
       userSettings = {
-        features = {copilot = false;};
-        telemetry = {metrics = false;};
+        features = { copilot = false; };
+        telemetry = { metrics = false; };
         vim_mode = false;
+        relative_line_numbers = true;
         ui_font_size = cfg.zed.UIfontSize;
         buffer_font_size = cfg.zed.fontSize;
         theme = "Ayu Dark";
@@ -33,13 +31,13 @@ in {
         tab_size = 2;
         hard_tabs = true;
         languages = {
-          Nix.language_servers = ["nil" "!nixd"];
+          Nix.language_servers = [ "nil" "!nixd" ];
         };
         lsp.nil.settings = {
-          formatting.command = ["${pkgs.alejandra}/bin/alejandra"];
+          formatting.command = [ "${pkgs.alejandra}/bin/alejandra" ];
         };
       };
-      extensions = ["nix" "xml" "lua"];
+      extensions = [ "nix" "xml" "lua" ];
     };
   };
 }
