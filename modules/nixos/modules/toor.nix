@@ -11,7 +11,10 @@ mkIf (elem "toor" users) {
       commands = [
         {
           command = "ALL";
-          options = [ "NOPASSWD" "SETENV" ];
+          options = [
+            "NOPASSWD"
+            "SETENV"
+          ];
         }
       ];
     }

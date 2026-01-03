@@ -1,6 +1,16 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.hm;
 in
 {
@@ -19,8 +29,12 @@ in
     programs.zed-editor = {
       enable = true;
       userSettings = {
-        features = { copilot = false; };
-        telemetry = { metrics = false; };
+        features = {
+          copilot = false;
+        };
+        telemetry = {
+          metrics = false;
+        };
         vim_mode = false;
         relative_line_numbers = "enabled";
         ui_font_size = cfg.zed.UIfontSize;
@@ -31,13 +45,20 @@ in
         tab_size = 2;
         hard_tabs = true;
         languages = {
-          Nix.language_servers = [ "nil" "!nixd" ];
+          Nix.language_servers = [
+            "nil"
+            "!nixd"
+          ];
         };
         lsp.nil.settings = {
           formatting.command = [ "${pkgs.alejandra}/bin/alejandra" ];
         };
       };
-      extensions = [ "nix" "xml" "lua" ];
+      extensions = [
+        "nix"
+        "xml"
+        "lua"
+      ];
     };
   };
 }

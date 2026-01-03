@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   cfg = config.services.graylog-sidecar;
   yaml-format = pkgs.formats.yaml { };
@@ -56,11 +61,18 @@ in
         };
       };
     };
-    user = lib.mkOption { type = lib.types.str; default = "graylog"; description = "User account under which graylog-sidecar runs"; };
+    user = lib.mkOption {
+      type = lib.types.str;
+      default = "graylog";
+      description = "User account under which graylog-sidecar runs";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ filebeat auditbeat ];
+    environment.systemPackages = [
+      filebeat
+      auditbeat
+    ];
 
     # reuse graylog user/group
     users.users = lib.mkIf (cfg.user == "graylog") {
@@ -79,7 +91,11 @@ in
         User = "${cfg.user}";
         StateDirectory = "graylog-sidecar";
         ExecStart = "${cfg.package}/bin/graylog-sidecar -c ${settings-yaml}";
-        AmbientCapabilities = [ "CAP_AUDIT_CONTROL" "CAP_AUDIT_READ" "CAP_FOWNER" ];
+        AmbientCapabilities = [
+          "CAP_AUDIT_CONTROL"
+          "CAP_AUDIT_READ"
+          "CAP_FOWNER"
+        ];
       };
     };
   };

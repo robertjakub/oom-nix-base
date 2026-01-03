@@ -1,9 +1,18 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
-  inherit (lib) mkIf elem concatMapStrings optionalString mkEnableOption mkOption types;
+  inherit (lib)
+    mkIf
+    elem
+    concatMapStrings
+    optionalString
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.modules.services;
 in
 {
@@ -24,9 +33,16 @@ in
     programs.ssh.enableAskPassword = false;
     services.openssh = {
       enable = true;
-      sftpFlags = [ "-f AUTHPRIV" "-l INFO" ];
+      sftpFlags = [
+        "-f AUTHPRIV"
+        "-l INFO"
+      ];
       settings = {
-        KexAlgorithms = [ "sntrup761x25519-sha512" "mlkem768x25519-sha256" "curve25519-sha256@libssh.org" ];
+        KexAlgorithms = [
+          "sntrup761x25519-sha512"
+          "mlkem768x25519-sha256"
+          "curve25519-sha256@libssh.org"
+        ];
         KbdInteractiveAuthentication = false;
         PasswordAuthentication = cfg.openssh.passauth;
         PermitRootLogin = "prohibit-password"; # XXX FIXme

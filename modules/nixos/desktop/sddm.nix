@@ -1,6 +1,13 @@
-{ config, lib, pkgs, ... }:
-let cfg = config.modules.desktop;
-in {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.modules.desktop;
+in
+{
   options.modules.desktop.sddm.enable = lib.mkEnableOption "enable sddm";
 
   config = lib.mkIf (cfg.sddm.enable) {

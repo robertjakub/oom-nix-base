@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   inherit (lib) mkIf elem findFirst;
@@ -86,7 +87,12 @@ in
         };
         "markup.restructuredtext" =
           let
-            docutils = pkgs.python3.withPackages (ps: with ps; [ docutils pygments ]);
+            docutils = pkgs.python3.withPackages (
+              ps: with ps; [
+                docutils
+                pygments
+              ]
+            );
           in
           {
             ENABLED = true;

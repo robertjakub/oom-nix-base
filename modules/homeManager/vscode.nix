@@ -3,10 +3,17 @@
   lib,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+}:
+let
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.hm;
-in {
+in
+{
   options.hm.vscode = {
     enable = mkEnableOption "home-manager/vscode";
     fontSize = mkOption {

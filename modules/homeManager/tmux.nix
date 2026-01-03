@@ -2,10 +2,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.hm;
-in {
+in
+{
   options.hm.tmux.enable = mkEnableOption "home-manager/tmux";
   config = mkIf (cfg.tmux.enable) {
     programs.tmux = {

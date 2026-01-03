@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   config.modules.wrappers.sets.dumpcap.options = {
     owner = "root";
     group = "wireshark";

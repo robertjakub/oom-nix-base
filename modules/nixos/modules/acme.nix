@@ -1,6 +1,11 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf mkOption mkEnableOption types;
+  inherit (lib)
+    mkIf
+    mkOption
+    mkEnableOption
+    types
+    ;
   cfg = config.modules.defaults.acme;
 in
 {

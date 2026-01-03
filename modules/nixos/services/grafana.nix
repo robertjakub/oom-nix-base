@@ -1,6 +1,7 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkIf elem findFirst;
@@ -9,17 +10,19 @@ let
   cfg = config.modules.services;
   defSops = config.modules.defaults.sops.enable;
 
-  dsOpts = { config, ... }: {
-    options = {
-      name = mkOption { type = types.str; };
-      type = mkOption { type = types.str; };
-      url = mkOption { type = types.str; };
-      isDefault = mkOption {
-        type = types.bool;
-        default = false;
+  dsOpts =
+    { config, ... }:
+    {
+      options = {
+        name = mkOption { type = types.str; };
+        type = mkOption { type = types.str; };
+        url = mkOption { type = types.str; };
+        isDefault = mkOption {
+          type = types.bool;
+          default = false;
+        };
       };
     };
-  };
 
   mkDS = ds: {
     inherit (ds) name;

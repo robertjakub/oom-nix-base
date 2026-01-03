@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   config.modules.pkgsets.pkgsets.base-small.pkgs = with pkgs; [
     tmux
     git

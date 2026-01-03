@@ -1,14 +1,26 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkOption types listToAttrs;
+  inherit (lib)
+    mkIf
+    mkOption
+    types
+    listToAttrs
+    ;
   cfg = config.modules.fortivpn;
 
-  vpnOpts = { config, ... }: {
-    options = {
-      name = mkOption { type = types.str; };
-      config = mkOption { type = types.str; };
+  vpnOpts =
+    { config, ... }:
+    {
+      options = {
+        name = mkOption { type = types.str; };
+        config = mkOption { type = types.str; };
+      };
     };
-  };
 
   vpnSVC = vpn: {
     name = "openfortivpn@${vpn.name}";

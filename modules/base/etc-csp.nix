@@ -1,9 +1,18 @@
-{ config, lib, pkgs, ... }:
-let cfg = config.modules.defaults.sys-pkgs;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.modules.defaults.sys-pkgs;
 in
 {
   options.modules.defaults = {
-    sys-pkgs.enable = lib.mkOption { type = lib.types.bool; default = true; };
+    sys-pkgs.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {

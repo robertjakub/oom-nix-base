@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let cfg = config.modules.apps;
-in lib.mkIf (lib.elem "neovim" cfg.apps) {
+let
+  cfg = config.modules.apps;
+in
+lib.mkIf (lib.elem "neovim" cfg.apps) {
   programs.neovim = {
     enable = true;
     defaultEditor = lib.mkDefault true;

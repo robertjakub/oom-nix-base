@@ -1,6 +1,7 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkIf;
@@ -21,4 +22,5 @@ in
       proxy_read_timeout 120;
     '';
   };
-}.vHost
+}
+.vHost

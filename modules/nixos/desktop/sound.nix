@@ -1,6 +1,13 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.modules.desktop.sound;
-in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.modules.desktop.sound;
+in
+{
   options.modules.desktop.sound.enable = lib.mkEnableOption "sound";
 
   config = lib.mkIf cfg.enable {

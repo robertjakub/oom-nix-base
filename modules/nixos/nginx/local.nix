@@ -1,6 +1,7 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 {
   vHost = {
@@ -17,7 +18,8 @@
       internal;
     '';
   };
-}.vHost
+}
+.vHost
 # { config, lib, ... }:
 # with lib;
 # {

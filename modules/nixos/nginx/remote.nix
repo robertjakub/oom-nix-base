@@ -1,6 +1,7 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 {
   vHost = {
@@ -9,4 +10,5 @@
       proxy_set_header REMOTE_ADDR $remote_addr;
     '';
   };
-}.vHost
+}
+.vHost

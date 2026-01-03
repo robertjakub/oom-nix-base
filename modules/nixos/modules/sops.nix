@@ -1,6 +1,11 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   inherit (builtins) filter elem;
   inherit (lib) listToAttrs;
   cfg = config.modules.defaults.sops;
@@ -19,12 +24,14 @@ in
         keyFile = "/var/lib/sops-nix/key.txt";
         generateKey = true;
       };
-      secrets = listToAttrs (map
-        (user: {
+      secrets = listToAttrs (
+        map (user: {
           name = (user: "users/${user.name}/password") user;
-          value = { neededForUsers = true; };
-        })
-        (filter (s: (elem "sops" s.tags)) config.modules.users.users));
+          value = {
+            neededForUsers = true;
+          };
+        }) (filter (s: (elem "sops" s.tags)) config.modules.users.users)
+      );
     };
   };
 }

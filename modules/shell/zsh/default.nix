@@ -1,11 +1,19 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.modules.zsh;
   zgen-zsh = ./zgen.zsh;
   zsh-autoload = ./autoload;
 in
 {
-  options.modules.zsh.enable = lib.mkOption { type = lib.types.bool; default = true; };
+  options.modules.zsh.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = true;
+  };
 
   config = lib.mkIf cfg.enable {
 

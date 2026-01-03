@@ -4,7 +4,8 @@
   fetchPypi,
   pkgs,
   ...
-}: let
+}:
+let
   pname = "click_params";
   version = "0.5.0";
   src = fetchPypi {
@@ -13,22 +14,32 @@
   };
   name = "${pname}-${version}";
 in
-  pythonPackages.buildPythonPackage rec {
-    inherit pname name version src;
+pythonPackages.buildPythonPackage rec {
+  inherit
+    pname
+    name
+    version
+    src
+    ;
 
-    pyproject = true;
-    # doCheck = false;
+  pyproject = true;
+  # doCheck = false;
 
-    propagatedBuildInputs = with pythonPackages; [click poetry-core deprecated validators];
+  propagatedBuildInputs = with pythonPackages; [
+    click
+    poetry-core
+    deprecated
+    validators
+  ];
 
-    patches = [
-      ./validators-deps.patch
-    ];
+  patches = [
+    ./validators-deps.patch
+  ];
 
-    meta = with lib; {
-      homepage = "https://github.com/click-contrib/click_params/";
-      description = "A bunch of useful click parameter types.";
-      license = licenses.asl20;
-      maintainers = with maintainers; [];
-    };
-  }
+  meta = with lib; {
+    homepage = "https://github.com/click-contrib/click_params/";
+    description = "A bunch of useful click parameter types.";
+    license = licenses.asl20;
+    maintainers = with maintainers; [ ];
+  };
+}

@@ -1,10 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.modules.apps;
-  pkgShark =
-    if config.services.xserver.enable
-    then pkgs.wireshark-qt
-    else pkgs.tshark;
+  pkgShark = if config.services.xserver.enable then pkgs.wireshark-qt else pkgs.tshark;
 in
 lib.mkIf (lib.elem "wireshark" cfg.apps) {
   programs.wireshark = {

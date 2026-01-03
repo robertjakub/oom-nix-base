@@ -1,6 +1,7 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkIf elem;
@@ -50,6 +51,8 @@ in
       port = cfg.step-ca.http_port;
     };
 
-    networking.firewall.allowedUDPPorts = mkIf (cfg.step-ca.openFirewall) [ config.services.step-ca.port ];
+    networking.firewall.allowedUDPPorts = mkIf (cfg.step-ca.openFirewall) [
+      config.services.step-ca.port
+    ];
   };
 }

@@ -1,5 +1,9 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
-{ vHost = { }; }.vHost
+{
+  vHost = { };
+}
+.vHost

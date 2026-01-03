@@ -1,5 +1,6 @@
 { lib, ... }:
-let fn = import ./lib/internal.nix { inherit lib; };
+let
+  fn = import ./lib/internal.nix { inherit lib; };
 in
 {
   imports = [ ./base.nix ] ++ (fn.scanPaths ./darwin);

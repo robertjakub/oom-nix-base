@@ -2,10 +2,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.hm;
-in {
+in
+{
   options.hm.ssh = {
     enable = mkEnableOption "home-manager/ssh";
   };

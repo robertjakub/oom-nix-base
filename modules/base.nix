@@ -8,13 +8,25 @@ in
 
   options.modules = {
     hostName = lib.mkOption { type = lib.types.str; };
-    domain = lib.mkOption { type = lib.types.str; default = "local"; };
-    etchost = lib.mkOption { type = lib.types.str; default = config.modules.hostName; };
+    domain = lib.mkOption {
+      type = lib.types.str;
+      default = "local";
+    };
+    etchost = lib.mkOption {
+      type = lib.types.str;
+      default = config.modules.hostName;
+    };
   };
   options.modules.defaults = {
     configRoot = lib.mkOption { type = lib.types.path; };
-    timeZone = lib.mkOption { type = lib.types.str; default = "Europe/Warsaw"; };
-    allowUnfree = lib.mkOption { type = lib.types.bool; default = true; };
+    timeZone = lib.mkOption {
+      type = lib.types.str;
+      default = "Europe/Warsaw";
+    };
+    allowUnfree = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
   };
 
   config = {
@@ -33,9 +45,15 @@ in
       max-jobs = lib.mkDefault 4;
       cores = lib.mkDefault 0;
       sandbox = lib.mkDefault true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       require-sigs = lib.mkDefault false;
-      trusted-users = [ "toor" "oom" ]; # FIXME should be moved to [system]-config
+      trusted-users = [
+        "toor"
+        "oom"
+      ]; # FIXME should be moved to [system]-config
     };
   };
 }

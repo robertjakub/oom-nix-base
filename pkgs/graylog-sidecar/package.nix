@@ -1,4 +1,10 @@
-{ lib, buildGoModule, fetchFromGitHub, pkgs, ... }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  pkgs,
+  ...
+}:
 buildGoModule rec {
   pname = "graylog-sidecar";
   version = "1.5.1";

@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   # services.prometheus.scrapeConfigs = [
   #   (lib.mkIf config.services.prometheus.enable {
   #     job_name = "uptime-kuma";

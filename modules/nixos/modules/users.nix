@@ -1,6 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf listToAttrs optional optionals;
+  inherit (lib)
+    mkIf
+    listToAttrs
+    optional
+    optionals
+    ;
   inherit (builtins) elem;
 
   cfg = config.modules.users;
@@ -20,17 +30,20 @@ let
         # group = user.name; # use default
         createHome = user.createHome;
         group = mkIf (user.group != null) user.group;
-        shell =
-          if user.shell != null
-          then user.shell
-          else "${pkgs.zsh}/bin/zsh"; # default shell: ZSH
+        shell = if user.shell != null then user.shell else "${pkgs.zsh}/bin/zsh"; # default shell: ZSH
         extraGroups =
           [ ]
           # ++ ["audio" "network"]
-          ++ (optionals config.services.xserver.enable [ "input" "video" ])
+          ++ (optionals config.services.xserver.enable [
+            "input"
+            "video"
+          ])
           ++ (optional (isTape && config.modules.defaults.tape.enable) "tape")
           ++ (optional (isAdmin && config.networking.networkmanager.enable) "networkmanager")
-          ++ (optionals (isAdmin && config.services.printing.enable) [ "cups" "lp" ])
+          ++ (optionals (isAdmin && config.services.printing.enable) [
+            "cups"
+            "lp"
+          ])
           ++ (optional (isAdmin && config.programs.wireshark.enable) "wireshark")
           ++ (optional (isAdmin && config.virtualisation.docker.enable) "docker")
           ++ (optional (isAdmin && config.hardware.i2c.enable) "i2c")

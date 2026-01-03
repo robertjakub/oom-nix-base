@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   config.modules.wrappers.sets.fping.options = {
     owner = "root";
     group = "root";

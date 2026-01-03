@@ -1,6 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types mdDoc isStorePath;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    mdDoc
+    isStorePath
+    ;
   cfg = config.services.passcore;
 in
 {
@@ -73,7 +85,9 @@ in
     systemd.packages = [ cfg.package ];
     systemd.services."passcore" = {
       wantedBy = [ "multi-user.target" ];
-      unitConfig = { ConditionFileNotEmpty = ""; };
+      unitConfig = {
+        ConditionFileNotEmpty = "";
+      };
       environment = cfg.settings;
       serviceConfig = {
         User = "passcore";

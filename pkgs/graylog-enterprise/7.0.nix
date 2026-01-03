@@ -1,5 +1,6 @@
 { callPackage, lib, ... }:
-let buildGraylog = callPackage ./graylog-enterprise.nix { };
+let
+  buildGraylog = callPackage ./graylog-enterprise.nix { };
 in
 buildGraylog {
   version = "7.0.1";

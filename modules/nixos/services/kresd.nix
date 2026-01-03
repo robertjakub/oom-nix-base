@@ -1,10 +1,16 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
-  inherit (lib) mkIf elem mkDefault mkEnableOption;
+  inherit (lib)
+    mkIf
+    elem
+    mkDefault
+    mkEnableOption
+    ;
   cfg = config.modules.services;
 in
 {

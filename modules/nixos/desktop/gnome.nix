@@ -1,8 +1,18 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.modules.desktop.gnome;
-in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.modules.desktop.gnome;
+in
+{
   options.modules.desktop.gnome = {
-    stdapps = lib.mkOption { type = lib.types.bool; default = true; };
+    stdapps = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
     orca = lib.mkEnableOption "gnome-orca";
     enable = lib.mkEnableOption "gnome";
   };
@@ -29,38 +39,48 @@ in {
 
     services.orca.enable = lib.mkForce cfg.orca;
 
-    environment.gnome.excludePackages = with pkgs; [
-      gnome-tour
-      gnome-remote-desktop
-    ]
-    ++ lib.optionals (cfg.stdapps) (with pkgs; [
-      cheese # photo booth
-      eog # image viewer
-      epiphany # web browser
-      simple-scan # document scanner
-      totem # video player
-      yelp # help viewer
-      evince # document viewer
-      file-roller # archive manager
-      geary # email client
-      seahorse # password manager
-      gnome-calendar
-      gnome-contacts
-      gnome-maps
-      gnome-music
-      gnome-photos
-      gnome-weather
-    ]);
+    environment.gnome.excludePackages =
+      with pkgs;
+      [
+        gnome-tour
+        gnome-remote-desktop
+      ]
+      ++ lib.optionals (cfg.stdapps) (
+        with pkgs;
+        [
+          cheese # photo booth
+          eog # image viewer
+          epiphany # web browser
+          simple-scan # document scanner
+          totem # video player
+          yelp # help viewer
+          evince # document viewer
+          file-roller # archive manager
+          geary # email client
+          seahorse # password manager
+          gnome-calendar
+          gnome-contacts
+          gnome-maps
+          gnome-music
+          gnome-photos
+          gnome-weather
+        ]
+      );
 
-    environment.systemPackages =
-      [ pkgs.gnome-tweaks pkgs.adwaita-qt pkgs.adwaita-qt6 ]
-      ++ [ pkgs.gnome-session ]
-      ++ [ pkgs.solarc-gtk-theme ]
-      ++ [ pkgs.gnomeExtensions.brightness-control-using-ddcutil ]
-      ++ [ pkgs.gnomeExtensions.applications-menu ]
-      ++ [ pkgs.ddcutil ]
-      ++ (lib.optionals config.services.tailscale.enable
-        [ pkgs.gnomeExtensions.tailscale-qs pkgs.gnomeExtensions.tailscale-status ]);
+    environment.systemPackages = [
+      pkgs.gnome-tweaks
+      pkgs.adwaita-qt
+      pkgs.adwaita-qt6
+    ]
+    ++ [ pkgs.gnome-session ]
+    ++ [ pkgs.solarc-gtk-theme ]
+    ++ [ pkgs.gnomeExtensions.brightness-control-using-ddcutil ]
+    ++ [ pkgs.gnomeExtensions.applications-menu ]
+    ++ [ pkgs.ddcutil ]
+    ++ (lib.optionals config.services.tailscale.enable [
+      pkgs.gnomeExtensions.tailscale-qs
+      pkgs.gnomeExtensions.tailscale-status
+    ]);
 
     environment.variables = {
       QT_QPA_PLATFORMTHEME = lib.mkDefault "gnome";

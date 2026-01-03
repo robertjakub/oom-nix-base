@@ -18,4 +18,5 @@ in
       proxy_read_timeout 120;
     '';
   };
-}.vHost
+}
+.vHost

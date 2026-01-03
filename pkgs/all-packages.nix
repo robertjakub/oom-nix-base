@@ -1,5 +1,6 @@
 { system, self, ... }:
-let pkgs = self.legacyPackages.${system};
+let
+  pkgs = self.legacyPackages.${system};
 in
 {
   flame = pkgs.flame;

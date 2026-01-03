@@ -1,6 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.services.dnscollector;
   yaml-format = pkgs.formats.yaml { };
   settings-yaml = yaml-format.generate "dnscollector.yaml" cfg.settings;
@@ -32,7 +42,9 @@ in
 
     systemd.services."dnscollector" = {
       wantedBy = [ "multi-user.target" ];
-      unitConfig = { ConditionFileNotEmpty = "/etc/dnscollector/dnscollector.yaml"; };
+      unitConfig = {
+        ConditionFileNotEmpty = "/etc/dnscollector/dnscollector.yaml";
+      };
       serviceConfig = {
         User = "dnscollector";
         Group = "dnscollector";

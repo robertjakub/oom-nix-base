@@ -1,13 +1,19 @@
-{ lib, config, pkgs, ... }:
-let defaults = config.modules.defaults;
-in {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  defaults = config.modules.defaults;
+in
+{
   config = lib.mkIf (lib.elem "k3s" defaults.roles) {
-    boot.kernelParams =
-      lib.optionals (pkgs.stdenv.hostPlatform.isAarch64) [
-        "cgroup_memory=1"
-        "cgroup_enable=cpuset"
-        "cgroup_enable=memory"
-      ];
+    boot.kernelParams = lib.optionals (pkgs.stdenv.hostPlatform.isAarch64) [
+      "cgroup_memory=1"
+      "cgroup_enable=cpuset"
+      "cgroup_enable=memory"
+    ];
 
     networking.firewall.allowedTCPPorts = [
       6443 # k3s: kubernetes API (TCP)

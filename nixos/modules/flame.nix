@@ -1,6 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types mdDoc isStorePath;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    mdDoc
+    isStorePath
+    ;
   cfg = config.services.flame;
 in
 {
@@ -65,7 +77,9 @@ in
     systemd.packages = [ cfg.package ];
     systemd.services."flame" = {
       wantedBy = [ "multi-user.target" ];
-      unitConfig = { ConditionFileNotEmpty = ""; };
+      unitConfig = {
+        ConditionFileNotEmpty = "";
+      };
       environment.HOME = "/var/lib/flame";
       environment.PORT = "${toString cfg.http_port}";
       environment.NODE_ENV = "production";
@@ -75,7 +89,10 @@ in
         Group = "flame";
         UMask = "0077";
         WorkingDirectory = "${cfg.package}/lib/node_modules/flame";
-        LoadCredential = [ "password:${cfg.passwordFile}" "secret:${cfg.secretFile}" ];
+        LoadCredential = [
+          "password:${cfg.passwordFile}"
+          "secret:${cfg.secretFile}"
+        ];
         DynamicUser = true;
         StateDirectory = "flame";
         # AmbientCapabilities=CAP_NET_BIND_SERVICE;

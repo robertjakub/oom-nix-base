@@ -1,46 +1,52 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption mkOption types listToAttrs;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    listToAttrs
+    ;
   cfg = config.modules.fs;
   fn = import ../../lib/internal.nix { inherit lib; };
 
-  fsOpts = { ... }: {
-    options = {
-      path = mkOption { type = types.str; };
-      fsType = mkOption {
-        type = types.str;
-        default = cfg.defaults.fsType;
-      };
-      uuid = mkOption {
-        type = types.str;
-        default = cfg.defaults.uuid;
-      };
-      opts = mkOption {
-        type = with types; listOf str;
-        default = [ ];
-      };
-      subvol = mkOption {
-        type = types.str;
-      };
-      neededForBoot = mkOption {
-        type = types.bool;
-        default = false;
+  fsOpts =
+    { ... }:
+    {
+      options = {
+        path = mkOption { type = types.str; };
+        fsType = mkOption {
+          type = types.str;
+          default = cfg.defaults.fsType;
+        };
+        uuid = mkOption {
+          type = types.str;
+          default = cfg.defaults.uuid;
+        };
+        opts = mkOption {
+          type = with types; listOf str;
+          default = [ ];
+        };
+        subvol = mkOption {
+          type = types.str;
+        };
+        neededForBoot = mkOption {
+          type = types.bool;
+          default = false;
+        };
       };
     };
-  };
 
   fsMap = fs: {
     name = fs.path;
     value =
       let
         device = "/dev/disk/by-uuid/${fs.uuid}";
-        subvol =
-          if (fs.fsType == "btrfs")
-          then [ "subvol=${fs.subvol}" ]
-          else [ ];
+        subvol = if (fs.fsType == "btrfs") then [ "subvol=${fs.subvol}" ] else [ ];
         opts = (cfg.defaults.opts.${fs.fsType} or [ ]) ++ fs.opts ++ subvol;
       in
       {
@@ -65,8 +71,16 @@ in
       type = with types; attrsOf (listOf str);
       default = {
         "ext4" = [ ];
-        "vfat" = [ "fmask=0022" "dmask=0022" ];
-        "btrfs" = [ "noatime" "ssd_spread" "autodefrag" "discard=async" ];
+        "vfat" = [
+          "fmask=0022"
+          "dmask=0022"
+        ];
+        "btrfs" = [
+          "noatime"
+          "ssd_spread"
+          "autodefrag"
+          "discard=async"
+        ];
       };
     };
     fileSystems = mkOption {

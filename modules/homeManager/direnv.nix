@@ -2,10 +2,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf mkEnableOption;
   cfg = config.hm;
-in {
+in
+{
   options.hm.direnv.enable = mkEnableOption "home-manager/direnv";
   config = mkIf (cfg.direnv.enable) {
     programs.direnv = {

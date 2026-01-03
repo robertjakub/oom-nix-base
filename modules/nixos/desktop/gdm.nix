@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let cfg = config.modules.desktop;
-in {
+let
+  cfg = config.modules.desktop;
+in
+{
   options.modules.desktop.gnome = {
     gdm = lib.mkOption {
       type = lib.types.bool;

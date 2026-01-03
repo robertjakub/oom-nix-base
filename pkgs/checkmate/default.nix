@@ -1,11 +1,11 @@
-{ lib
-, fetchFromGitHub
-, buildNpmPackage
-, nodejs
-, libusb1
-, makeWrapper
-, iputils
-,
+{
+  lib,
+  fetchFromGitHub,
+  buildNpmPackage,
+  nodejs,
+  libusb1,
+  makeWrapper,
+  iputils,
 }:
 let
   pname = "checkmate";
@@ -34,7 +34,10 @@ buildNpmPackage {
   inherit version pname;
   src = "${src}/client";
 
-  nativeBuildInputs = [ nodejs makeWrapper ];
+  nativeBuildInputs = [
+    nodejs
+    makeWrapper
+  ];
   buildInputs = [ libusb1 ];
 
   npmDepsHash = "sha256-TsIWJJ0rcwxc+C1Kx+VALcSd9R9Rm0Jqna55uV6z3Gs=";
@@ -52,7 +55,7 @@ buildNpmPackage {
     (cd dist; cp -r . $out/client)
     cp -r ${server}/lib/node_modules/server $out
     makeWrapper "${nodejs}/bin/node" $out/startserver \
-    	--set PATH ${lib.makeBinPath [iputils]};
+    	--set PATH ${lib.makeBinPath [ iputils ]};
     runHook postInstall
   '';
 

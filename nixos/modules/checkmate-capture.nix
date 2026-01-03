@@ -1,20 +1,32 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  inherit (lib) mkEnableOption mkPackageOption mkIf mkOption types;
+  inherit (lib)
+    mkEnableOption
+    mkPackageOption
+    mkIf
+    mkOption
+    types
+    ;
   inherit (lib) isPath;
   inherit (builtins) toString;
   cfg = config.services.additions.checkmate-capture;
 
-  assertStringPath = optionName: value:
-    if isPath value
-    then
+  assertStringPath =
+    optionName: value:
+    if isPath value then
       throw ''
         services.additions.checkmate-capture.${optionName}:
           ${toString value}
           is a Nix path, but should be a string, since Nix
           paths are copied into the world-readable Nix store.
       ''
-    else value;
+    else
+      value;
 in
 {
   options.services.additions.checkmate-capture = {
@@ -22,7 +34,10 @@ in
     package = mkPackageOption pkgs.oom-base "checkmate-capture" { };
 
     ginMode = mkOption {
-      type = types.enum [ "release" "debug" ];
+      type = types.enum [
+        "release"
+        "debug"
+      ];
       default = "release";
       description = "The mode of the Gin framework";
     };

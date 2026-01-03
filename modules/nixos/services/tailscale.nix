@@ -1,9 +1,15 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
-  inherit (lib) mkIf elem types mkOption;
+  inherit (lib)
+    mkIf
+    elem
+    types
+    mkOption
+    ;
   cfg = config.modules.services;
 in
 {

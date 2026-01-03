@@ -1,14 +1,21 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
-  inherit (lib) mkIf elem mkForce optional;
+  inherit (lib)
+    mkIf
+    elem
+    mkForce
+    optional
+    ;
   inherit (lib) mkOption types;
   cfg = config.modules.services;
 
-  kuma-paths = with pkgs;
+  kuma-paths =
+    with pkgs;
     [ unixtools.ping ]
     ++ optional config.services.tailscale.enable pkgs.tailscale
     ++ optional config.services.uptime-kuma.appriseSupport apprise;

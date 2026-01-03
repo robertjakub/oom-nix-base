@@ -24,7 +24,8 @@ in
     };
     virtualisation.vmware.guest.enable = cfg.defaults.vmguest;
 
-    nix.optimise.automatic = if config.boot.isContainer then lib.mkDefault false else lib.mkDefault true;
+    nix.optimise.automatic =
+      if config.boot.isContainer then lib.mkDefault false else lib.mkDefault true;
     system.stateVersion = "25.11";
   };
 }

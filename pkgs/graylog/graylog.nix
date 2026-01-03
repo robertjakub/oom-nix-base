@@ -1,19 +1,20 @@
-{ lib
-, stdenv
-, fetchurl
-, makeWrapper
-, openjdk11_headless
-, openjdk17_headless
-, openjdk21_headless
-, systemd
-, nixosTests
-,
-}: { version
-   , hash
-   , maintainers
-   , license
-   ,
-   }:
+{
+  lib,
+  stdenv,
+  fetchurl,
+  makeWrapper,
+  openjdk11_headless,
+  openjdk17_headless,
+  openjdk21_headless,
+  systemd,
+  nixosTests,
+}:
+{
+  version,
+  hash,
+  maintainers,
+  license,
+}:
 stdenv.mkDerivation rec {
   pname = "graylog_${lib.versions.majorMinor version}";
   inherit version;
@@ -30,28 +31,28 @@ stdenv.mkDerivation rec {
     "--set-default"
     "JAVA_HOME"
     "${
-      if (lib.versionAtLeast version "7.0")
-      then openjdk21_headless
-      else if (lib.versionAtLeast version "5.0")
-      then openjdk17_headless
-      else openjdk11_headless
+      if (lib.versionAtLeast version "7.0") then
+        openjdk21_headless
+      else if (lib.versionAtLeast version "5.0") then
+        openjdk17_headless
+      else
+        openjdk11_headless
     }"
-    "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [systemd]}"
+    "--prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ systemd ]}"
   ];
 
   passthru.tests = { inherit (nixosTests) graylog; };
 
-  installPhase =
-    ''
-      mkdir -p $out
-      cp -r {graylog.jar,bin,plugin} $out
-    ''
-    + lib.optionalString (lib.versionOlder version "4.3") ''
-      cp -r lib $out
-    ''
-    + ''
-      wrapProgram $out/bin/graylogctl $makeWrapperArgs
-    '';
+  installPhase = ''
+    mkdir -p $out
+    cp -r {graylog.jar,bin,plugin} $out
+  ''
+  + lib.optionalString (lib.versionOlder version "4.3") ''
+    cp -r lib $out
+  ''
+  + ''
+    wrapProgram $out/bin/graylogctl $makeWrapperArgs
+  '';
 
   meta = with lib; {
     description = "Open source log management solution";

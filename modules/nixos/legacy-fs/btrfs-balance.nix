@@ -1,8 +1,9 @@
-{ config
-, lib
-, utils
-, pkgs
-, ...
+{
+  config,
+  lib,
+  utils,
+  pkgs,
+  ...
 }:
 let
   inherit (lib) mkOption types;
@@ -49,7 +50,8 @@ in
     ];
     systemd.timers =
       let
-        balanceTimer = fs:
+        balanceTimer =
+          fs:
           let
             fs' = utils.escapeSystemdPath fs;
           in
@@ -68,14 +70,21 @@ in
 
     systemd.services =
       let
-        balanceService = fs:
+        balanceService =
+          fs:
           let
             fs' = utils.escapeSystemdPath fs;
           in
           nameValuePair "btrfs-balance-${fs'}" {
             description = "btrfs balance on ${fs}";
-            conflicts = [ "shutdown.target" "sleep.target" ];
-            before = [ "shutdown.target" "sleep.target" ];
+            conflicts = [
+              "shutdown.target"
+              "sleep.target"
+            ];
+            before = [
+              "shutdown.target"
+              "sleep.target"
+            ];
             after = optionals scrubEnable [ "btrfs-scrub-${fs'}.service" ];
             serviceConfig = {
               # simple and not oneshot, otherwise ExecStop is not used

@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let cfg = config.modules;
-in lib.mkIf (lib.elem "wabbit" cfg.caches) {
+let
+  cfg = config.modules;
+in
+lib.mkIf (lib.elem "wabbit" cfg.caches) {
   nix.settings = {
     substituters = [ "https://cache-nix.project2.xyz/uconsole" ];
     trusted-substituters = [ "https://cache-nix.project2.xyz/uconsole" ];

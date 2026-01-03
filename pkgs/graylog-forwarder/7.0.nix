@@ -1,6 +1,7 @@
-{ callPackage
-, lib
-, ...
+{
+  callPackage,
+  lib,
+  ...
 }:
 let
   buildGraylog = callPackage ./graylog-forwarder.nix { };

@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   config.modules.pkgsets.pkgsets.raspberry.pkgs = with pkgs; [
     # libraspberrypi
     # raspberrypi-eeprom

@@ -1,24 +1,29 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.modules.nginx;
 
-  vHostConfigs = lib.listToAttrs (map
-    (name: {
+  vHostConfigs = lib.listToAttrs (
+    map (name: {
       name = lib.replaceStrings [ ".nix" ] [ "" ] name;
       value = import (./. + (lib.toPath "/nginx/${name}")) { inherit config lib pkgs; };
-    })
-    (lib.attrNames (builtins.readDir ./nginx)));
+    }) (lib.attrNames (builtins.readDir ./nginx))
+  );
 
   mkVHost = vHost: {
     name = vHost.domain;
     value =
       let
-        proxyPass =
-          if (vHost.proxy != null) then { locations."/".proxyPass = vHost.proxy; } else { };
+        proxyPass = if (vHost.proxy != null) then { locations."/".proxyPass = vHost.proxy; } else { };
         redirectURL =
-          if (vHost.redirect != null)
-          then { locations."/".extraConfig = "return 301 ${vHost.redirect}$request_uri;"; }
-          else { };
+          if (vHost.redirect != null) then
+            { locations."/".extraConfig = "return 301 ${vHost.redirect}$request_uri;"; }
+          else
+            { };
         attrs = lib.recursiveUpdate vHostConfigs."${vHost.service}" (proxyPass // redirectURL);
       in
       {
@@ -33,49 +38,51 @@ let
       // attrs;
   };
 
-  vHostsOpts = { config, ... }: {
-    options = {
-      service = lib.mkOption { type = lib.types.str; };
-      domain = lib.mkOption { type = lib.types.str; };
-      aliases = lib.mkOption {
-        type = with lib.types; listOf str;
-        default = [ ];
-      };
-      proxy = lib.mkOption {
-        type = with lib.types; nullOr str;
-        default = null;
-      };
-      ssl = lib.mkOption {
-        type = lib.types.bool;
-        default = cfg.defaults.ssl;
-        description = "SSL port";
-      };
-      acme = lib.mkOption {
-        type = lib.types.bool;
-        default = cfg.defaults.acme;
-        description = "ACME support";
-      };
-      plain = lib.mkOption {
-        type = lib.types.bool;
-        default = cfg.defaults.plain;
-        description = "add non-SSL port";
-      };
-      root = lib.mkOption {
-        type = with lib.types; nullOr str;
-        default = null;
-        description = "webroot location";
-      };
-      redirect = lib.mkOption {
-        type = with lib.types; nullOr str;
-        default = null;
-        description = "vHost redirect url";
-      };
-      listenAddresses = lib.mkOption {
-        type = with lib.types; listOf str;
-        default = [ ];
+  vHostsOpts =
+    { config, ... }:
+    {
+      options = {
+        service = lib.mkOption { type = lib.types.str; };
+        domain = lib.mkOption { type = lib.types.str; };
+        aliases = lib.mkOption {
+          type = with lib.types; listOf str;
+          default = [ ];
+        };
+        proxy = lib.mkOption {
+          type = with lib.types; nullOr str;
+          default = null;
+        };
+        ssl = lib.mkOption {
+          type = lib.types.bool;
+          default = cfg.defaults.ssl;
+          description = "SSL port";
+        };
+        acme = lib.mkOption {
+          type = lib.types.bool;
+          default = cfg.defaults.acme;
+          description = "ACME support";
+        };
+        plain = lib.mkOption {
+          type = lib.types.bool;
+          default = cfg.defaults.plain;
+          description = "add non-SSL port";
+        };
+        root = lib.mkOption {
+          type = with lib.types; nullOr str;
+          default = null;
+          description = "webroot location";
+        };
+        redirect = lib.mkOption {
+          type = with lib.types; nullOr str;
+          default = null;
+          description = "vHost redirect url";
+        };
+        listenAddresses = lib.mkOption {
+          type = with lib.types; listOf str;
+          default = [ ];
+        };
       };
     };
-  };
 in
 {
   options.modules.nginx = {
@@ -122,6 +129,9 @@ in
       virtualHosts = lib.listToAttrs (map mkVHost cfg.vHosts);
     };
 
-    networking.firewall.allowedTCPPorts = lib.mkIf (cfg.openFirewall) [ 80 443 ];
+    networking.firewall.allowedTCPPorts = lib.mkIf (cfg.openFirewall) [
+      80
+      443
+    ];
   };
 }
