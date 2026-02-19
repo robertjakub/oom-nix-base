@@ -59,7 +59,7 @@ in
       libnotify
       mako
       adwaita-icon-theme
-      xfce.thunar
+      thunar
       hypridle
       hyprlock
     ];
