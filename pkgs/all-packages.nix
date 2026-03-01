@@ -5,8 +5,6 @@ in
 {
   flame = pkgs.flame;
   passcore = pkgs.passcore;
-  checkmate = pkgs.checkmate;
-  checkmate-capture = pkgs.checkmate-capture;
   future-cyan-hyprcursor = pkgs.future-cyan-hyprcursor;
   graylog-7_0 = pkgs.graylog-7_0;
   graylog-enterprise-7_0 = pkgs.graylog-enterprise-7_0;
